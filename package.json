@@ -1,0 +1,29 @@
+{
+  "name": "algorifun",
+  "version": "1.0.0",
+  "description": "A collection of animated algorithms",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksmai/algorifun.git"
+  },
+  "keywords": [
+    "Algorithms",
+    "Animations",
+    "Visualizations",
+    "Data",
+    "Structures",
+    "Programming",
+    "Contests",
+    "Solution"
+  ],
+  "author": "ksmai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ksmai/algorifun/issues"
+  },
+  "homepage": "https://github.com/ksmai/algorifun#readme"
+}
