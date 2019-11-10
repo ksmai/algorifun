@@ -12,10 +12,12 @@ const Headline = styled.h1`
   text-decoration: underline;
 `;
 
+const greet: string = 'Test Again';
+
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <Headline>Hello, World!</Headline>
+    <Headline>{greet}</Headline>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
