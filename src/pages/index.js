@@ -1,14 +1,21 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import styled from '@emotion/styled';
 
 import Layout from '../components/layout';
 import Image from '../components/image';
 import SEO from '../components/seo';
 
+const Headline = styled.h1`
+  font-size: 24px;
+  color: red;
+  text-decoration: underline;
+`;
+
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <h1>Hi auntie</h1>
+    <Headline>Hello, World!</Headline>
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
