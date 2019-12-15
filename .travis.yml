@@ -7,11 +7,10 @@ script:
   - npm test
   - npm run build
 
-before_deploy: cp -R public/ docs
-
 deploy:
   provider: pages:git
   token: $GITHUB_TOKEN
   target_branch: gh-pages
+  local_dir: public
   edge: true
   skip_cleanup: true
