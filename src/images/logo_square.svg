@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48"
+   height="48"
+   viewBox="0 0 48 48"
+   id="svg4136"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="logo_square.svg"
+   inkscape:export-filename="/home/ksmai/webdev/algorifun/src/images/logo_128x128.png"
+   inkscape:export-xdpi="240"
+   inkscape:export-ydpi="240">
+  <defs
+     id="defs4138" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#282828"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="80.152543"
+     inkscape:cy="16.135256"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     width="144px"
+     inkscape:window-width="1535"
+     inkscape:window-height="876"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4141">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4684"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30px;line-height:125%;font-family:STIX;-inkscape-font-specification:STIX;letter-spacing:0px;word-spacing:0px;fill:#d5d5d5;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="translate(5.4950781,1004.8145)"><flowRegion
+         id="flowRegion4686"><rect
+           id="rect4688"
+           width="142.17897"
+           height="45.709404"
+           x="0.75761443"
+           y="1.0279065"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:30px;font-family:STIX;-inkscape-font-specification:STIX;fill:#d5d5d5;fill-opacity:1" /></flowRegion><flowPara
+         id="flowPara4690"
+         style="font-style:italic;font-variant:normal;font-weight:500;font-stretch:normal;font-size:30px;font-family:'URW Chancery L';-inkscape-font-specification:'URW Chancery L Medium Italic';fill:#d5d5d5;fill-opacity:1">Af</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4700"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="translate(0,1004.3622)"><flowRegion
+         id="flowRegion4702"><rect
+           id="rect4704"
+           width="135.61298"
+           height="69.700523"
+           x="-7.5761442"
+           y="-12.861691" /></flowRegion><flowPara
+         id="flowPara4706"></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4708"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="translate(0,1004.3622)"><flowRegion
+         id="flowRegion4710"><rect
+           id="rect4712"
+           width="182.58507"
+           height="94.449265"
+           x="-20.708128"
+           y="-34.832508" /></flowRegion><flowPara
+         id="flowPara4714"></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4735"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion4737"><rect
+           id="rect4739"
+           width="78.286819"
+           height="66.922607"
+           x="-12.879445"
+           y="-11.346462" /></flowRegion><flowPara
+         id="flowPara4741"></flowPara></flowRoot>  </g>
+</svg>

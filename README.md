@@ -1,2 +1,3 @@
 # algorifun
-A collection of animations for algorithm
+
+A collection of animated algorithms

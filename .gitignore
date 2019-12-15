@@ -59,3 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+# cache
+.cache/
+
+# build artifacts
+public/
+docs/
