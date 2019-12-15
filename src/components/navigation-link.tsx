@@ -17,8 +17,11 @@ interface Props {
 }
 
 const NavigationLink = ({ to, ... props }: Props) => {
-    const Component = to ? Link : 'a';
-    return <Component to={to} css={linkCSS} {...props} />
+    if (to) {
+        return <Link to={to} css={linkCSS} {...props} />
+    } else {
+        return <a css={linkCSS} {...props} />
+    }
 };
 
 export default NavigationLink;
