@@ -13,15 +13,10 @@ module.exports = {
             name: 'Home',
             to: '/',
         }, {
-            id: 'link-1b',
-            name: 'Link 1b',
-            to: '/',
-        }, {
-            id: 'group',
-            name: 'Group',
+            id: 'algorithms',
+            name: 'Algorithms',
             children: [
-                { id: 'group-2a', name: 'Link 2a', to: '/' },
-                { id: 'group-2b', name: 'Link 2b', to: '/' },
+                { id: 'bubble-sort', name: 'Bubble Sort', to: '/algorithms/bubble-sort' },
             ],
         }],
     },
