@@ -1,7 +1,8 @@
-import Typography from "typography"
-import funstonTheme from 'typography-theme-funston'
+import Typography from 'typography';
+import funstonTheme from 'typography-theme-funston';
+import { textColor } from './colors';
 
-const typography = new Typography(funstonTheme)
-console.log(typography, funstonTheme)
+funstonTheme.bodyColor = textColor;
+const typography = new Typography(funstonTheme);
 
-export default typography
+export default typography;
