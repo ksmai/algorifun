@@ -1,46 +1,28 @@
-import { bgColor, primaryColor } from './src/utils/colors';
+// from src/utils/colors.ts
+const bgColor = '#121212';
+const primaryColor = '#F48FB1';
 
 module.exports = {
+    pathPrefix: '/algorifun',
     siteMetadata: {
         title: `Algorifun`,
         description: `A collection of animated algorithms`,
         author: `@ksmai`,
         navigationLinks: [{
+            id: 'home',
             name: 'Home',
             to: '/',
         }, {
+            id: 'link-1b',
             name: 'Link 1b',
             to: '/',
         }, {
+            id: 'group',
             name: 'Group',
             children: [
-                { name: 'Link 2a', to: '/' },
-                { name: 'Link 2b', to: '/' },
-                { name: 'Group 2', children: [
-                    { name: 'Link 3a', to: '/' },
-                    { name: 'Link 3b', to: '/' },
-                    { name: 'Link 4a', to: '/' },
-                    { name: 'Link 5b', to: '/' },
-                    { name: 'Link 6a', to: '/' },
-                    { name: 'Link 7b', to: '/' },
-                    { name: 'Link 8a', to: '/' },
-                    { name: 'Link 9b', to: '/' },
-                    { name: 'Link 10a', to: '/' },
-                    { name: 'Link 11b', to: '/' },
-                    { name: 'Link 12a', to: '/' },
-                    { name: 'Link 13b', to: '/' },
-                    { name: 'Link 14a', to: '/' },
-                    { name: 'Link 15b', to: '/' },
-                    { name: 'Link 16a', to: '/' },
-                    { name: 'Link 17b', to: '/' },
-                    { name: 'Link 18a', to: '/' },
-                    { name: 'Link 19b', to: '/' },
-                    { name: 'Link 20', to: '/' },
-                    { name: 'Link 21b', to: '/' },
-                    { name: 'Link 22a', to: '/' },
-                    { name: 'Link 23b', to: '/' },
-                ],
-            }]
+                { id: 'group-2a', name: 'Link 2a', to: '/' },
+                { id: 'group-2b', name: 'Link 2b', to: '/' },
+            ],
         }],
     },
     plugins: [

@@ -1,4 +1,5 @@
 export const bgColor = '#121212';
+export const bgColor1dp = '#1D1D1D';
 export const primaryColor = '#F48FB1';
 export const primaryColorLight = '#FFC1E3';
 export const primaryColorDark = '#BF5F82';

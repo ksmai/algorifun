@@ -7,11 +7,13 @@ import NavigationLink from './navigation-link';
 import { primaryColor } from '../utils/colors';
 
 interface PageLink {
+    id: string;
     name: string;
     to: string;
 };
 
 interface PageLinkGroup {
+    id: string;
     name: string;
     children: Array<PageLink | PageLinkGroup>;
 }
@@ -67,7 +69,7 @@ const Links = ({ links, onOpen, opened }: LinksProps) => {
             {
                 links.map((link) =>
                     (link as PageLink).to ?
-                        <li key={link.name}>
+                        <li key={link.id}>
                             <ClassNames>
                                 {({ css }) => (
                                     <BlockLink
@@ -77,20 +79,20 @@ const Links = ({ links, onOpen, opened }: LinksProps) => {
                                 )}
                             </ClassNames>
                         </li> :
-                        <>
-                            <li key={link.name}>
+                        <React.Fragment key={link.id}>
+                            <li>
                                 <BlockLink
                                     href="#"
-                                    onClick={(e) => onOpen(e, link.name)}
-                                    css={opened[link.name] ? [activeLinkCSS, openedGroupCSS] : closedGroupCSS}
+                                    onClick={(e: React.MouseEvent) => onOpen(e, link.id)}
+                                    css={opened[link.id] ? [activeLinkCSS, openedGroupCSS] : closedGroupCSS}
                                 >{link.name}</BlockLink>
                             </li>
-                            { opened[link.name] && <li key={`__nested__${link.name}`}><Links
+                            { opened[link.id] && <li><Links
                                 links={(link as PageLinkGroup).children}
                                 onOpen={onOpen}
                                 opened={opened}
                             /></li> }
-                        </>
+                        </React.Fragment>
                 )
             }
         </LinkList>
@@ -104,21 +106,19 @@ const Nav = styled.nav`
 `;
 
 const SiteNavigation = () => {
-    // hardcode 3 levels max
+    // adjust the maximum level of links in the query accordingly
     const data = useStaticQuery(graphql`
         query LinksQuery {
             site {
                 siteMetadata {
                     navigationLinks {
+                        id
                         name
                         to
                         children {
+                            id
                             name
                             to
-                            children {
-                                name
-                                to
-                            }
                         }
                     }
                 }
@@ -127,9 +127,9 @@ const SiteNavigation = () => {
     `);
     const links: PageLinks = data.site.siteMetadata.navigationLinks;
     const [opened, setOpened] = useState({});
-    const onOpen = useCallback((e, name) => {
+    const onOpen = useCallback((e, id) => {
         e.preventDefault();
-        setOpened((prevOpened) => ({ ...prevOpened, [name]: !prevOpened[name] }));
+        setOpened((prevOpened) => ({ ...prevOpened, [id]: !prevOpened[id] }));
     }, []);
     return (
         <Nav>

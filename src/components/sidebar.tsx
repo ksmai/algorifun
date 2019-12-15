@@ -4,13 +4,11 @@ import styled from '@emotion/styled';
 
 import Logo from './logo';
 import SiteNavigation from './site-navigation';
-import { bgColor } from '../utils/colors';
 
 const Container = styled.aside`
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-color: ${bgColor};
 `;
 
 const SiteDescription = styled.small`

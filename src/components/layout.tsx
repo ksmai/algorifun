@@ -11,6 +11,7 @@ import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 
 import Sidebar from './sidebar';
+import { bgColor, bgColor1dp } from '../utils/colors';
 
 const sidebarWidth = 300;
 const sidebarCSS = css`
@@ -19,10 +20,13 @@ const sidebarCSS = css`
   left: 0;
   bottom: 0;
   width: ${sidebarWidth}px;
+  background-color: ${bgColor1dp};
 `;
 
 const Content = styled.main`
   margin-left: ${sidebarWidth}px;
+  min-height: 100vh;
+  background-color: ${bgColor};
 `;
 
 const Layout = ({ children }) => {
