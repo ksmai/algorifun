@@ -5,3 +5,5 @@
  */
 
 // You can delete this file if you're not using it
+import fn from './wrap-page-element';
+export const wrapPageElement = fn;
