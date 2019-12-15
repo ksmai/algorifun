@@ -21,6 +21,7 @@ module.exports = {
         }],
     },
     plugins: [
+        'gatsby-plugin-resolve-src',
         `gatsby-plugin-emotion`,
         `gatsby-plugin-typescript`,
         `gatsby-plugin-react-helmet`,
