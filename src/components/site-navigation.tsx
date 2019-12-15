@@ -21,12 +21,11 @@ type PageLinks = Array<PageLink | PageLinkGroup>;
 
 const LinkList = styled.ul`
     list-style: none;
-    padding: 0;
+    padding: 0 0 0 24px;
     margin: 0;
 `;
 
 interface LinksProps {
-    level?: number;
     links: PageLinks;
     onOpen: (e: React.MouseEvent, name: string) => void;
     opened: { [name: string]: boolean };
@@ -62,9 +61,9 @@ const activeLinkCSS = css`
     color: ${primaryColor};
 `;
 
-const Links = ({ links, onOpen, opened, level = 0 }: LinksProps) => {
+const Links = ({ links, onOpen, opened }: LinksProps) => {
     return (
-        <LinkList css={css`padding-left: ${ level > 0 ? 24 : 0 }px;`}>
+        <LinkList>
             {
                 links.map((link) =>
                     (link as PageLink).to ?
@@ -88,7 +87,6 @@ const Links = ({ links, onOpen, opened, level = 0 }: LinksProps) => {
                             </li>
                             { opened[link.name] && <li key={`__nested__${link.name}`}><Links
                                 links={(link as PageLinkGroup).children}
-                                level={level + 1}
                                 onOpen={onOpen}
                                 opened={opened}
                             /></li> }
@@ -102,7 +100,7 @@ const Links = ({ links, onOpen, opened, level = 0 }: LinksProps) => {
 const Nav = styled.nav`
     height: 100%;
     overflow-y: auto;
-    padding: 0 24px 32px;
+    padding: 0 24px 32px 0;
 `;
 
 const SiteNavigation = () => {
