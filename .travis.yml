@@ -4,6 +4,7 @@ node_js: 12
 install: npm install
 
 script:
+  - npm run gen-pages
   - npm test
   - npm run build
 
