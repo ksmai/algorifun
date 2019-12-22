@@ -11,8 +11,8 @@ export default class BubbleSort<T> implements Algorithm {
         for (let end = this.arr.length - 1; end >= 1; --end) {
             let swapped = false;
             for (let pos = 0; pos < end; ++pos) {
-                if (this.check(pos)) {
-                    this.bubble(pos);
+                if (this.comp(pos)) {
+                    this.swap(pos);
                     swapped = true;
                 }
             }
@@ -30,12 +30,12 @@ export default class BubbleSort<T> implements Algorithm {
         this.tracer.trace({ type: 'init', payload: { data: inputs } });
     }
 
-    private check(pos: number): boolean {
+    private comp(pos: number): boolean {
         this.tracer.trace({ type: 'comp', payload: { pos } });
         return this.arr[pos] > this.arr[pos + 1];
     }
 
-    private bubble(pos: number): void {
+    private swap(pos: number): void {
         [this.arr[pos], this.arr[pos + 1]] = [this.arr[pos + 1], this.arr[pos]];
         this.tracer.trace({ type: 'swap', payload: { pos } });
     }
