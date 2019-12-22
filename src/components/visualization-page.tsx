@@ -1,25 +1,45 @@
 import React, { useState, useEffect } from 'react';
 
-import Algorithm from 'algorithms';
+import Step from 'algorithms/step';
+import Worker from 'workers';
 
 interface Props {
-    AlgorithmConstructor: new (...args: any[]) => Algorithm;
+    WorkerConstructor: new () => Worker;
     inputs: any;
-    params: any[];
 }
 
-const VisualizationPage = ({ AlgorithmConstructor, inputs, params }: Props) => {
+const VisualizationPage = ({ WorkerConstructor, inputs }: Props) => {
     const [data, setData] = useState(inputs);
 
     useEffect(() => {
-        const algorithm = new AlgorithmConstructor(data, ...params);
-        const runToEnd = require('algorithms/run-to-end').default;
-        console.log(runToEnd(algorithm));
-    }, [data, params]);
+        let worker = new WorkerConstructor();
+        let stop = false;
+        (window as any).stopMe = () => stop = true;
+
+        function handleStep(step: Step): Promise<Step|null> {
+            if (step.done) {
+                stop = true;
+            }
+            if (stop) {
+                return Promise.resolve(null);
+            }
+            console.log(step);
+            return worker.run().then(handleStep);
+        }
+        worker.init(data)
+            .then(() => worker.run())
+            .then(handleStep);
+
+        return () => {
+            stop = true;
+            worker.terminate();
+            worker = null;
+        };
+    }, [data]);
 
     return (
         <>
-            <p>Hello World</p>
+            <canvas width="1920" height="1080"></canvas>
         </>
     );
 };

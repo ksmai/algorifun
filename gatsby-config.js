@@ -25,6 +25,7 @@ module.exports = {
         `gatsby-plugin-emotion`,
         `gatsby-plugin-typescript`,
         `gatsby-plugin-react-helmet`,
+        'gatsby-plugin-workerize-loader',
         {
             resolve: `gatsby-source-filesystem`,
             options: {

@@ -34,6 +34,7 @@
     "babel-jest": "^24.9.0",
     "babel-preset-gatsby": "^0.2.26",
     "gatsby-plugin-resolve-src": "^2.0.0",
+    "gatsby-plugin-workerize-loader": "^1.1.0",
     "husky": "^3.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
