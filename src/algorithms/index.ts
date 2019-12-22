@@ -1,5 +1,6 @@
-import Tracer from 'tracers'
+import Step from 'algorithms/step';
 
 export default interface Algorithm {
-    run(inputs: any, tracer: Tracer): any;
+    run(...args: any[]): Step;
+    getResult(): any;
 }

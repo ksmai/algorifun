@@ -1,42 +1,61 @@
 import Algorithm from 'algorithms';
-import Tracer from 'tracers';
-import TraceEvent from 'tracers/trace-event';
 
 export default class BubbleSort<T> implements Algorithm {
-    private arr: T[];
-    private tracer: Tracer;
+    private end: number;
+    private pos: number = 0;
+    private swapped: boolean = false;
+    private started = false;
+    private done = false;
+    private compared = false;
 
-    run(inputs: T[], tracer: Tracer): T[] {
-        this.init(inputs, tracer);
-        for (let end = this.arr.length - 1; end >= 1; --end) {
-            let swapped = false;
-            for (let pos = 0; pos < end; ++pos) {
-                if (this.comp(pos)) {
-                    this.swap(pos);
-                    swapped = true;
-                }
+    constructor(private arr: T[], private compare: (x: T, y: T) => boolean) {
+        if (this.arr.length < 2) {
+            this.done = true;
+        }
+        this.end = this.arr.length - 1;
+    }
+
+    public run() {
+        while (true) {
+            if (!this.started) {
+                this.started = true;
+                return { done: false, type: 'init', payload: { data: this.arr.slice() } };
             }
-            if (!swapped) {
-                break;
+            if (this.done) {
+                return { done: true, type: 'done', payload: null };
+            }
+            if (!this.compared) {
+                this.compared = true;
+                return { done: false, type: 'comp', payload: { pos: this.pos } };
+            }
+            if (!this.compare(this.arr[this.pos], this.arr[this.pos + 1])) {
+                this.compared = false;
+                this.swapped = true;
+                [this.arr[this.pos], this.arr[this.pos + 1]] = [this.arr[this.pos + 1], this.arr[this.pos]];
+                const step = { done: false, type: 'swap', payload: { pos: this.pos } };
+                this.advance();
+                return step;
+            } else {
+                this.advance();
+                this.compared = false;
             }
         }
-        this.tracer.trace({ type: 'done', payload: { data: this.arr } });
+    }
+
+    public getResult(): T[] {
         return this.arr;
     }
 
-    private init(inputs: T[], tracer: Tracer): void {
-        this.arr = inputs.slice();
-        this.tracer = tracer;
-        this.tracer.trace({ type: 'init', payload: { data: inputs } });
-    }
-
-    private comp(pos: number): boolean {
-        this.tracer.trace({ type: 'comp', payload: { pos } });
-        return this.arr[pos] > this.arr[pos + 1];
-    }
-
-    private swap(pos: number): void {
-        [this.arr[pos], this.arr[pos + 1]] = [this.arr[pos + 1], this.arr[pos]];
-        this.tracer.trace({ type: 'swap', payload: { pos } });
+    private advance(): void {
+        ++this.pos;
+        if (this.pos === this.end) {
+            if (!this.swapped || this.end === 1) {
+                this.done = true;
+                return;
+            }
+            this.pos = 0;
+            --this.end;
+            this.swapped = false;
+        }
     }
 }
