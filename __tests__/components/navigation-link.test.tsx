@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import NavigationLink from '../src/components/navigation-link';
+import NavigationLink from 'components/navigation-link';
 
 describe('NavigationLink', () => {
     it('renders GastbyLink correctly', () => {
