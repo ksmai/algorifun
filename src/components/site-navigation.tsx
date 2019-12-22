@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { css, ClassNames } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useStaticQuery, graphql } from 'gatsby';
@@ -141,6 +141,17 @@ const SiteNavigation = () => {
         e.preventDefault();
         setOpened((prevOpened) => ({ ...prevOpened, [id]: !prevOpened[id] }));
     }, []);
+
+    // open the items to show all the links for the initial page
+    useEffect(() => {
+        setOpened((prevOpened) => {
+            const { pathname } = window.location;
+            return pathname.split('/').reduce((opened, id) => {
+                opened[id] = true;
+                return opened;
+            }, { ...prevOpened });
+        });
+    }, [])
     return (
         <Nav>
             <Links links={links} onOpen={onOpen} opened={opened} />
