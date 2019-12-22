@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
 import Algorithm from 'algorithms';
-import Tracer from 'tracers/tracer';
 
 interface Props {
-    algorithm: Algorithm;
+    AlgorithmConstructor: new (...args: any[]) => Algorithm;
     inputs: any;
+    params: any[];
 }
 
-const VisualizationPage = ({ algorithm, inputs }: Props) => {
+const VisualizationPage = ({ AlgorithmConstructor, inputs, params }: Props) => {
     const [data, setData] = useState(inputs);
-    const [traces, setTraces] = useState([]);
 
     useEffect(() => {
-        const tracer = new Tracer();
-        tracer.clear();
-        algorithm.run(data, tracer);
-        setTraces(tracer.getTraces());
-    }, [data]);
+        const algorithm = new AlgorithmConstructor(data, ...params);
+        const runToEnd = require('algorithms/run-to-end').default;
+        console.log(runToEnd(algorithm));
+    }, [data, params]);
 
     return (
         <>
-            <p>{JSON.stringify(traces, null, 2)}</p>
+            <p>Hello World</p>
         </>
     );
 };

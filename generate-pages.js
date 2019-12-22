@@ -30,13 +30,14 @@ import React from 'react';
 
 import VisualizationPage from 'components/visualization-page';
 import ${className} from 'algorithms/${idPath}';
-import data from 'data/${idPath}.json';
+import config from 'configs/${idPath}';
 
 const ${className}Page = () => {
     return (
         <VisualizationPage
-            algorithm={new ${className}()}
-            inputs={data.data}
+            AlgorithmConstructor={${className}}
+            inputs={config.data}
+            params={config.params}
         />
     );
 };
