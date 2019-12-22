@@ -20,13 +20,14 @@ export default class BubbleSort<T> implements Algorithm {
                 break;
             }
         }
+        this.tracer.trace({ type: 'done', payload: { data: this.arr } });
         return this.arr;
     }
 
     private init(inputs: T[], tracer: Tracer): void {
         this.arr = inputs.slice();
         this.tracer = tracer;
-        this.tracer.trace({ type: 'init', payload: { data: inputs.slice() } });
+        this.tracer.trace({ type: 'init', payload: { data: inputs } });
     }
 
     private check(pos: number): boolean {
