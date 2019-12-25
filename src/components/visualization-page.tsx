@@ -1,46 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import styled from '@emotion/styled';
 
 import Step from 'algorithms/step';
 import Worker from 'workers';
+import Visualizer from 'visualizers';
 import BufferedWorker from 'workers/buffered-worker';
+
+const DrawingArea = styled.canvas`
+    width: 100%;
+`;
 
 interface Props {
     WorkerConstructor: new () => Worker;
+    VisualizerConstructor: new (canvas: HTMLCanvasElement, worker: Worker) => Visualizer;
     inputs: any;
+    width?: number;
+    height?: number;
 }
 
-const VisualizationPage = ({ WorkerConstructor, inputs }: Props) => {
+const VisualizationPage = ({
+    WorkerConstructor,
+    VisualizerConstructor,
+    inputs,
+    width = 1920,
+    height = 1080,
+}: Props) => {
     const [data, setData] = useState(inputs);
+    const canvasRef = useRef(null);
 
     useEffect(() => {
         let worker = new BufferedWorker(20, new WorkerConstructor());
-        let stop = false;
-        (window as any).stopMe = () => stop = true;
-
-        function handleStep(step: Step): Promise<Step|null> {
-            if (step.done) {
-                stop = true;
+        const canvas = canvasRef.current;
+        let visualizer = new VisualizerConstructor(canvas, worker);
+        worker.init(data).then(() => {
+            if (visualizer) {
+                visualizer.start();
             }
-            if (stop) {
-                return Promise.resolve(null);
-            }
-            console.log(step);
-            return worker.run().then(handleStep);
-        }
-        worker.init(data)
-            .then(() => worker.run())
-            .then(handleStep);
+        });
 
         return () => {
-            stop = true;
-            worker.terminate();
+            visualizer.terminate();
+            visualizer = null;
             worker = null;
-        };
+        }
     }, [data]);
 
     return (
         <>
-            <canvas width="1920" height="1080"></canvas>
+            <DrawingArea
+                ref={canvasRef}
+                width={width}
+                height={height}
+                data-paper-resize
+            />
         </>
     );
 };
