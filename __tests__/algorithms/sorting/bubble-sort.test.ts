@@ -1,4 +1,4 @@
-import BubbleSort from 'algorithms/algorithms/bubble-sort';
+import BubbleSort from 'algorithms/sorting/bubble-sort';
 import runToEnd from 'algorithms/run-to-end';
 
 describe('BubbleSort', () => {
