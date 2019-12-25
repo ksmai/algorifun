@@ -18,15 +18,15 @@ describe('BubbleSort', () => {
         expect(actual).toEqual(expected);
     });
 
-    it('can sort 2 ordered items', () => {
-        const actual = sort([1, 2]);
-        const expected = [1, 2];
+    it('can sort ordered items', () => {
+        const actual = sort([1, 2, 3]);
+        const expected = [1, 2, 3];
         expect(actual).toEqual(expected);
     });
 
-    it('can sort 2 out-of-order items', () => {
-        const actual = sort([2, 1]);
-        const expected = [1, 2];
+    it('can sort out-of-order items', () => {
+        const actual = sort([3, 2, 1]);
+        const expected = [1, 2, 3];
         expect(actual).toEqual(expected);
     });
 
