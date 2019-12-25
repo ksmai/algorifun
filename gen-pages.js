@@ -42,12 +42,14 @@ import React from 'react';
 
 import VisualizationPage from 'components/visualization-page';
 import ${className}Worker from 'workers/${idPath}.worker.js';
-import config from 'configs/${idPath}';
+import ${className}Visualizer from 'visualizers/${idPath}-visualizer';
+import config from 'configs/${idPath}-config';
 
 const ${className}Page = () => {
     return (
         <VisualizationPage
             WorkerConstructor={${className}Worker}
+            VisualizerConstructor={${className}Visualizer}
             inputs={config.data}
         />
     );
@@ -66,8 +68,8 @@ function createWorkerFile(idPath, filePath, className) {
   * Last updated: ${new Date().toISOString()}
   */
 
-import ${className} from 'algorithms/${idPath}';
-import config from 'configs/${idPath}';
+import ${className} from 'algorithms/${idPath}-algorithm';
+import config from 'configs/${idPath}-config';
 
 let algorithm;
 
