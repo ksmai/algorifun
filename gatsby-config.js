@@ -13,22 +13,19 @@ module.exports = {
             name: 'Home',
             to: '/',
         }, {
-            id: 'link-1b',
-            name: 'Link 1b',
-            to: '/',
-        }, {
-            id: 'group',
-            name: 'Group',
+            id: 'sorting',
+            name: 'Sorting',
             children: [
-                { id: 'group-2a', name: 'Link 2a', to: '/' },
-                { id: 'group-2b', name: 'Link 2b', to: '/' },
+                { id: 'bubble-sort', name: 'Bubble Sort', to: '/sorting/bubble-sort' },
             ],
         }],
     },
     plugins: [
+        'gatsby-plugin-resolve-src',
         `gatsby-plugin-emotion`,
         `gatsby-plugin-typescript`,
         `gatsby-plugin-react-helmet`,
+        'gatsby-plugin-workerize-loader',
         {
             resolve: `gatsby-source-filesystem`,
             options: {

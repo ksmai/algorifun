@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { css, ClassNames } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useStaticQuery, graphql } from 'gatsby';
@@ -81,11 +81,21 @@ const Links = ({ links, onOpen, opened }: LinksProps) => {
                         </li> :
                         <React.Fragment key={link.id}>
                             <li>
-                                <BlockLink
-                                    href="#"
-                                    onClick={(e: React.MouseEvent) => onOpen(e, link.id)}
-                                    css={opened[link.id] ? [activeLinkCSS, openedGroupCSS] : closedGroupCSS}
-                                >{link.name}</BlockLink>
+                                <ClassNames>
+                                    {({ css }) => (
+                                        // Intentionally use a GatsbyLink for these
+                                        // intermediate link elements in order to
+                                        // have them highlighted when a child is active
+                                        // id of the PageLinkGroup must be part of the final path
+                                        <BlockLink
+                                            to={link.id}
+                                            onClick={(e: React.MouseEvent) => onOpen(e, link.id)}
+                                            css={opened[link.id] ? openedGroupCSS : closedGroupCSS}
+                                            activeClassName={css`${activeLinkCSS}`}
+                                            partiallyActive={true}
+                                        >{link.name}</BlockLink>
+                                    )}
+                                </ClassNames>
                             </li>
                             { opened[link.id] && <li><Links
                                 links={(link as PageLinkGroup).children}
@@ -131,6 +141,17 @@ const SiteNavigation = () => {
         e.preventDefault();
         setOpened((prevOpened) => ({ ...prevOpened, [id]: !prevOpened[id] }));
     }, []);
+
+    // open the items to show all the links for the initial page
+    useEffect(() => {
+        setOpened((prevOpened) => {
+            const { pathname } = window.location;
+            return pathname.split('/').reduce((opened, id) => {
+                opened[id] = true;
+                return opened;
+            }, { ...prevOpened });
+        });
+    }, [])
     return (
         <Nav>
             <Links links={links} onOpen={onOpen} opened={opened} />
