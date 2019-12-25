@@ -31,18 +31,18 @@ class DoneState implements State {
 }
 
 class CompareState<T> implements State {
-    constructor(private arr: T[], private compare: CompareFunction<T>, private pos: number, private end: number, private swapped = false) {
+    constructor(private arr: T[], private compare: CompareFunction<T>, private pos: number, private end: number, private lastSwapped = -1) {
     }
 
     run() {
         const step = { done: false, type: 'comp', payload: { pos: this.pos } };
-        const next = new SwapState(this.arr, this.compare, this.pos, this.end, this.swapped);
+        const next = new SwapState(this.arr, this.compare, this.pos, this.end, this.lastSwapped);
         return { step, next };
     }
 }
 
 class SwapState<T> implements State {
-    constructor(private arr: T[], private compare: CompareFunction<T>, private pos: number, private end: number, private swapped = false) {
+    constructor(private arr: T[], private compare: CompareFunction<T>, private pos: number, private end: number, private lastSwapped: number) {
     }
 
     run() {
@@ -51,10 +51,10 @@ class SwapState<T> implements State {
         let step: Step;
         if (!this.compare(this.arr[i], this.arr[j])) {
             [this.arr[i], this.arr[j]] = [this.arr[j], this.arr[i]];
-            step = { done: false, type: 'swap', payload: { pos: this.pos } };
-            this.swapped = true;
+            this.lastSwapped = this.pos;
+            step = { done: false, type: 'swap', payload: { pos: this.pos, end: this.end, lastSwapped: this.lastSwapped } };
         } else {
-            step = { done: false, type: 'noswap', payload: { pos: this.pos } };
+            step = { done: false, type: 'noswap', payload: { pos: this.pos, end: this.end, lastSwapped: this.lastSwapped } };
         }
         const next = this.advance();
         return { step, next };
@@ -63,14 +63,14 @@ class SwapState<T> implements State {
     private advance(): State {
         ++this.pos;
         if (this.pos === this.end) {
-            if (!this.swapped || this.end === 1) {
+            if (this.lastSwapped < 1) {
                 return new DoneState();
             }
+            this.end = this.lastSwapped;
             this.pos = 0;
-            --this.end;
-            this.swapped = false;
+            this.lastSwapped = -1;
         }
-        return new CompareState(this.arr, this.compare, this.pos, this.end, this.swapped);
+        return new CompareState(this.arr, this.compare, this.pos, this.end, this.lastSwapped);
     }
 }
 
