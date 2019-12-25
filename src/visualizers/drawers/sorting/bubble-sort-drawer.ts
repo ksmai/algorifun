@@ -65,6 +65,10 @@ export default class BubbleSortDrawer implements Drawer {
         const xmax = this.circles[this.circles.length - 1].bounds.right + padding;
         const ymax = height;
         this.camera = new Camera(this.view, xmax, ymax);
+        if (xmax < width) {
+            const offset = (width - xmax) / 2;
+            this.circles.forEach((circle) => circle.position.x += offset);
+        }
         return new IdleAnimation(BubbleSortDrawer.INIT_IDLE);
     }
 
