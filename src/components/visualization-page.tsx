@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 
-import Step from 'algorithms/step';
 import Worker from 'workers';
 import Visualizer from 'visualizers';
+import { DrawerConstructor } from 'visualizers/drawers';
 import BufferedWorker from 'workers/buffered-worker';
 
 const DrawingArea = styled.canvas`
@@ -11,16 +11,16 @@ const DrawingArea = styled.canvas`
 `;
 
 interface Props {
-    WorkerConstructor: new () => Worker;
-    VisualizerConstructor: new (canvas: HTMLCanvasElement, worker: Worker) => Visualizer;
+    WorkerFactory: new () => Worker;
+    DrawerFactory: DrawerConstructor;
     inputs: any;
     width?: number;
     height?: number;
 }
 
 const VisualizationPage = ({
-    WorkerConstructor,
-    VisualizerConstructor,
+    WorkerFactory,
+    DrawerFactory,
     inputs,
     width = 1920,
     height = 1080,
@@ -29,9 +29,9 @@ const VisualizationPage = ({
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        let worker = new BufferedWorker(20, new WorkerConstructor());
+        let worker = new BufferedWorker(20, new WorkerFactory());
         const canvas = canvasRef.current;
-        let visualizer = new VisualizerConstructor(canvas, worker);
+        let visualizer = new Visualizer(canvas, worker, DrawerFactory);
         worker.init(data).then(() => {
             if (visualizer) {
                 visualizer.start();

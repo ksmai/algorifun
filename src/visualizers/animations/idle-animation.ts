@@ -1,4 +1,4 @@
-import Animation from 'visualizers/animation';
+import Animation from 'visualizers/animations';
 
 export default class IdleAnimation implements Animation {
     constructor(private seconds: number) {

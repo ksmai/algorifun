@@ -42,14 +42,14 @@ import React from 'react';
 
 import VisualizationPage from 'components/visualization-page';
 import ${className}Worker from 'workers/${idPath}.worker.js';
-import ${className}Visualizer from 'visualizers/${idPath}-visualizer';
+import ${className}Drawer from 'visualizers/drawers/${idPath}-drawer';
 import config from 'configs/${idPath}-config';
 
 const ${className}Page = () => {
     return (
         <VisualizationPage
-            WorkerConstructor={${className}Worker}
-            VisualizerConstructor={${className}Visualizer}
+            WorkerFactory={${className}Worker}
+            DrawerFactory={${className}Drawer}
             inputs={config.data}
         />
     );
