@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Step from 'algorithms/step';
 import Worker from 'workers';
+import BufferedWorker from 'workers/buffered-worker';
 
 interface Props {
     WorkerConstructor: new () => Worker;
@@ -12,7 +13,7 @@ const VisualizationPage = ({ WorkerConstructor, inputs }: Props) => {
     const [data, setData] = useState(inputs);
 
     useEffect(() => {
-        let worker = new WorkerConstructor();
+        let worker = new BufferedWorker(20, new WorkerConstructor());
         let stop = false;
         (window as any).stopMe = () => stop = true;
 
