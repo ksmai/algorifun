@@ -2,7 +2,8 @@ import paper from 'paper';
 
 import Step from 'algorithms/step';
 import Drawer from 'visualizers/drawers';
-import NumberedCircle from 'visualizers/drawables/numbered-circle';
+import NumberedCircle from 'visualizers/common/numbered-circle';
+import Camera from 'visualizers/common/camera';
 import Animation from 'visualizers/animations';
 import IdleAnimation from 'visualizers/animations/idle-animation';
 import EmptyAnimation from 'visualizers/animations/empty-animation';
@@ -20,10 +21,15 @@ export default class BubbleSortDrawer implements Drawer {
     static readonly SWAP_DURATION = 0.6;
     static readonly SWAP_IDLE = 0.5;
     static readonly NOSWAP_IDLE = 0.5;
+    static readonly SLIDE_DURATION = 0.8;
+    static readonly RADIUS = 1 / 30; // in terms of width
+    static readonly MARGIN = 1 / 30; // in terms of width
+    static readonly PADDING = 1 / 30; // in terms of width
 
     private circles: NumberedCircle[];
+    private camera: Camera;
 
-    constructor(private width: number, private height: number) {
+    constructor(private view: paper.View) {
     }
 
     handleStep(step: Step): Animation {
@@ -41,18 +47,24 @@ export default class BubbleSortDrawer implements Drawer {
     }
 
     private handleInit(step: Step): Animation {
+        const { width, height } = this.view.viewSize;
         const arr = step.payload.data;
-        const radius = this.width / 30;
-        const position = new paper.Point(radius * 2, this.height / 2);
+        const radius = width * BubbleSortDrawer.RADIUS;
+        const padding = width * BubbleSortDrawer.PADDING;
+        const margin = width * BubbleSortDrawer.MARGIN;
+        const position = new paper.Point(radius + padding, height / 2);
         this.circles = arr.map((number: number, i: number) => {
             const circle = new NumberedCircle({
                 number,
                 radius,
                 color: BubbleSortDrawer.INITIAL_COLOR,
-                position: position.add(new paper.Point(radius * 3 * i, 0)),
+                position: position.add(new paper.Point((radius * 2 + margin) * i, 0)),
             });
             return circle;
         });
+        const xmax = this.circles[this.circles.length - 1].bounds.right + padding;
+        const ymax = height;
+        this.camera = new Camera(this.view, xmax, ymax);
         return new IdleAnimation(BubbleSortDrawer.INIT_IDLE);
     }
 
@@ -60,7 +72,14 @@ export default class BubbleSortDrawer implements Drawer {
         const { pos } = step.payload;
         this.circles[pos].changeColor(BubbleSortDrawer.HIGHLIGHTED_COLOR);
         this.circles[pos + 1].changeColor(BubbleSortDrawer.HIGHLIGHTED_COLOR);
-        return new IdleAnimation(BubbleSortDrawer.COMP_IDLE);
+        return new CompositeAnimation(
+            this.camera.ensureVisible(
+                BubbleSortDrawer.SLIDE_DURATION,
+                this.circles[pos],
+                this.circles[pos + 1],
+            ),
+            new IdleAnimation(BubbleSortDrawer.COMP_IDLE),
+        );
     }
 
     private handleSwap(step: Step): Animation {

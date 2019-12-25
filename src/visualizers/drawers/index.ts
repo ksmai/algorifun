@@ -1,3 +1,5 @@
+import paper from 'paper';
+
 import Step from 'algorithms/step';
 import Animation from 'visualizers/animations'
 
@@ -7,5 +9,5 @@ export default interface Drawer {
 }
 
 export interface DrawerConstructor {
-    new (width: number, height: number): Drawer;
+    new (view: paper.View): Drawer;
 }

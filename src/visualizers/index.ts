@@ -19,8 +19,7 @@ export default class Visualizer {
         this.project = new paper.Project(canvas);
         this.project.activate();
         this.project.view.onFrame = this.onFrame.bind(this);
-        const { width, height } = this.project.view.viewSize;
-        this.drawer = new DrawerFactory(width, height);
+        this.drawer = new DrawerFactory(this.project.view);
     }
 
     private onFrame(event: any) {
