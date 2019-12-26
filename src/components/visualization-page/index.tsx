@@ -5,9 +5,7 @@ import { Action, play } from 'components/visualization-page/actions'
 import reducer from 'components/visualization-page/reducer';
 import State from 'components/visualization-page/state';
 import VisualizationContext from 'components/visualization-page/context';
-import SpeedModifier from 'components/visualization-page/speed-modifier';
-import DataEditor from 'components/visualization-page/data-editor';
-import PlaybackControl from 'components/visualization-page/playback-control';
+import ControlPanel from 'components/visualization-page/control-panel';
 import Config from 'configs';
 import Worker from 'workers';
 import Visualizer from 'visualizers';
@@ -94,12 +92,7 @@ const VisualizationPage = ({
                     ref={canvasRef}
                     data-paper-resize
                 />
-                <div >
-                <SpeedModifier />
-                <DataEditor />
-                <PlaybackControl />
-
-                </div>
+                <ControlPanel />
             </Container>
         </VisualizationContext.Provider>
     );

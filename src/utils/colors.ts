@@ -23,6 +23,7 @@ export const white = '#ffffff';
 
 export const bgColor = '#121212';
 export const bgColor1dp = '#1d1d1d';
+export const bgColor2dp = '#212121';
 export const primaryColor = pink;
 export const primaryColorLight = '#ffc1e3';
 export const primaryColorDark = '#bf5f82';
