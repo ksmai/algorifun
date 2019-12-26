@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import { speedup } from 'components/visualization-page/actions';
 import VisualizationContext from 'components/visualization-page/context';
 import * as colors from 'utils/colors';
+import Button from 'components/button';
 
 interface SpeedChoice {
     speed: number;
@@ -19,31 +20,18 @@ const choices: SpeedChoice[] = [
     { speed: 4, name: '4x' },
 ];
 
-const boxCSS = css`
+const padding = css`
     padding: 0 8px;
-    height: 32px;
-    line-height: 32px;
 `;
 
-const hoverCSS = css`
-    cursor: pointer;
-
-    &:hover {
-        background-color: #fff;
-        color: ${colors.bgColor6dp};
-    }
-`;
-
-const ComboBox = styled.div`
+const ComboBox = styled(Button)`
     display: inline-block;
     width: 64px;
-    border: 1px solid ${colors.white};
     position: relative;
     outline: none;
     text-align: right;
-    ${boxCSS}
-    ${hoverCSS}
-`;
+    ${padding}
+`.withComponent('div');
 
 interface OptionsProps {
     offset: number;
@@ -51,18 +39,21 @@ interface OptionsProps {
 
 const Options = styled.div`
     position: absolute;
+    z-index: 100;
     top: 0;
-    left: 0;
-    right: 0;
+    left: -1px;
+    right: -1px;
     background-color: ${colors.bgColor6dp};
     transform: translateY(${({ offset }: OptionsProps) => -offset * 100 / choices.length}%);
 `;
 
-const Option = styled.div`
-    color: #fff;
-    ${boxCSS}
-    ${hoverCSS}
-`;
+const Option = styled(Button)`
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    text-align: right;
+    ${padding}
+`.withComponent('div');
 
 const SpeedModifer = () => {
     const [{ speed }, dispatch] = useContext(VisualizationContext);
