@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 
+import Config from 'configs';
 import Worker from 'workers';
 import Visualizer from 'visualizers';
 import { DrawerConstructor } from 'visualizers/drawers';
@@ -13,7 +14,7 @@ const DrawingArea = styled.canvas`
 interface Props {
     WorkerFactory: new () => Worker;
     DrawerFactory: DrawerConstructor;
-    inputs: any;
+    config: Config;
     width?: number;
     height?: number;
 }
@@ -21,11 +22,11 @@ interface Props {
 const VisualizationPage = ({
     WorkerFactory,
     DrawerFactory,
-    inputs,
+    config,
     width = 1920,
     height = 1080,
 }: Props) => {
-    const [data, setData] = useState(inputs);
+    const [data, setData] = useState(() => config.data());
     const canvasRef = useRef(null);
 
     useEffect(() => {
