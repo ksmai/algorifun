@@ -99,7 +99,7 @@ export default class BubbleSortDrawer implements Drawer {
                 this.circles[pos].changeColor(BubbleSortDrawer.INITIAL_COLOR);
                 this.circles[pos + 1].changeColor(BubbleSortDrawer.INITIAL_COLOR);
                 if (pos + 1 === end) {
-                    this.markFinished(lastSwapped + 1);
+                    this.markFinished(lastSwapped);
                 }
             }),
             new IdleAnimation(BubbleSortDrawer.SWAP_IDLE / 2),
@@ -111,12 +111,16 @@ export default class BubbleSortDrawer implements Drawer {
         this.circles[pos].changeColor(BubbleSortDrawer.INITIAL_COLOR);
         this.circles[pos + 1].changeColor(BubbleSortDrawer.INITIAL_COLOR);
         if (pos + 1 === end) {
-            this.markFinished(lastSwapped + 1);
+            this.markFinished(lastSwapped);
         }
         return new IdleAnimation(BubbleSortDrawer.NOSWAP_IDLE);
     }
 
-    private markFinished(from: number) {
+    private markFinished(lastSwapped: number) {
+        // all the elements after lastSwapped must be sorted
+        // however, if lastSwapped is 0, it means only the
+        // 0-th element is left, which is inherently sorted
+        const from = lastSwapped === 0 ? lastSwapped : lastSwapped + 1;
         for (let i = from; i < this.circles.length; ++i) {
             this.circles[i].changeColor(BubbleSortDrawer.FINISHED_COLOR);
         }
