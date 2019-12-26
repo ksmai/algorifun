@@ -85,7 +85,7 @@ const SpeedModifer = () => {
     }, []);
 
     const onBlur = useCallback((e: React.FocusEvent) => {
-        //setOpen(false);
+        setOpen(false);
     }, []);
 
     return (
