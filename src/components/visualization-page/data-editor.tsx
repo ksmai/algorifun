@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 
-import { input, update } from 'components/visualization-page/actions';
+import { input } from 'components/visualization-page/actions';
 import VisualizationContext from 'components/visualization-page/context';
 
 const DataEditor = () => {
@@ -11,18 +11,12 @@ const DataEditor = () => {
         [dispatch],
     );
 
-    const onConfirm = useCallback((e) => dispatch(update()), [dispatch]);
-
     return (
         <>
             <textarea
                 onChange={onChange}
                 value={value}
             />
-            <button
-                type="button"
-                onClick={onConfirm}
-            >Confirm</button>
         </>
     );
 };
