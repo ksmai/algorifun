@@ -23,13 +23,12 @@ const SpeedModifer = ({ speed, dispatch, speeds }: Props) => {
         });
     }, [dispatch])
     return (
-        <select onChange={callback}>
-            {speeds.map((choice) => (
+        <select onChange={callback} value={speed}>
+            {speeds.map(({ speed, name }) => (
                 <option
-                    value={choice.speed}
-                    key={choice.name}
-                    selected={speed === choice.speed}
-                >{choice.name}</option>
+                    value={speed}
+                    key={name}
+                >{name}</option>
             ))}
         </select>
     );
