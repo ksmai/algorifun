@@ -1,6 +1,8 @@
 import React, { useReducer, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 
+import Action from 'components/visualization-page/actions'
+import SpeedModifier from 'components/visualization-page/speed-modifier';
 import Config from 'configs';
 import Worker from 'workers';
 import Visualizer from 'visualizers';
@@ -18,22 +20,6 @@ interface Props {
     width?: number;
     height?: number;
 }
-
-interface InputAction {
-    type: 'input';
-    payload: { input: string };
-}
-
-interface UpdateAction {
-    type: 'update';
-}
-
-interface SpeedupAction {
-    type: 'speedup';
-    payload: { speed: number };
-}
-
-type Action = InputAction | UpdateAction | SpeedupAction;
 
 interface State {
     data: any;
@@ -70,6 +56,14 @@ const init = (config: Config) => {
     return { data, input, speed };
 };
 
+const speeds = [
+    { speed: 0.25, name: '0.25x' },
+    { speed: 0.5, name: '0.5x' },
+    { speed: 1, name: '1x' },
+    { speed: 2, name: '2x' },
+    { speed: 4, name: '4x' },
+];
+
 const VisualizationPage = ({
     WorkerFactory,
     DrawerFactory,
@@ -87,6 +81,7 @@ const VisualizationPage = ({
         visualizerRef.current = new Visualizer(canvas, worker, DrawerFactory);
         worker.init(state.data).then(() => {
             if (visualizerRef.current) {
+                visualizerRef.current.changeSpeed(state.speed);
                 visualizerRef.current.start();
             }
         });
@@ -99,6 +94,9 @@ const VisualizationPage = ({
     }, [state.data]);
 
     useEffect(() => {
+        if (visualizerRef.current) {
+            visualizerRef.current.changeSpeed(state.speed);
+        }
     }, [state.speed]);
 
     return (
@@ -108,6 +106,11 @@ const VisualizationPage = ({
                 width={width}
                 height={height}
                 data-paper-resize
+            />
+            <SpeedModifier
+                speed={state.speed}
+                speeds={speeds}
+                dispatch={dispatch}
             />
         </>
     );
