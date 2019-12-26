@@ -17,7 +17,10 @@ interface ContainerProps {
 
 const height = ({ height, isResizing, isOpen }: ContainerProps) => {
     if (isResizing) {
-        return css`height: ${height}px;`;
+        return css`
+            height: ${height}px;
+            padding-bottom: 0;
+        `;
     } else if (isOpen) {
         return css`height: 90%`;
     } else {
@@ -38,7 +41,7 @@ const Container = styled.div`
     left: 0;
     right: 0;
     z-index: 100;
-    background-color: ${hexRGBA(colors.bgColor2dp, .5)};
+    background-color: ${hexRGBA(colors.bgColor2dp, .7)};
     padding: 20px 50px;
     overflow: hidden;
     ${height};
@@ -74,7 +77,33 @@ const ResizeHandle = styled.div`
     }
 `;
 
-const resizing = css`
+const CloseButton = styled.button`
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+    border: none;
+    background-color: ${colors.bgColor4dp};
+    color: ${colors.white};
+    border-radius: 50%;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 8px;
+
+    &:hover {
+        background-color: ${colors.white};
+        color: ${colors.bgColor4dp};
+    }
+
+    &:after {
+        content: "🞩";
+        display: block;
+    }
 `;
 
 const ControlPanel = () => {
@@ -109,12 +138,17 @@ const ControlPanel = () => {
         }
     }, [height, pointerY]);
 
+    const onClose = useCallback((e: React.MouseEvent) => {
+        setIsOpen(false);
+    }, []);
+
     return (
         <Container
             height={height}
             isResizing={isResizing}
             isOpen={isOpen}
         >
+            <CloseButton onClick={onClose} />
             <ResizeHandle
                 onPointerDown={onPointerDown}
                 onPointerMove={onPointerMove}
