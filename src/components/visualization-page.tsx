@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useReducer, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 
 import Config from 'configs';
@@ -19,6 +19,57 @@ interface Props {
     height?: number;
 }
 
+interface InputAction {
+    type: 'input';
+    payload: { input: string };
+}
+
+interface UpdateAction {
+    type: 'update';
+}
+
+interface SpeedupAction {
+    type: 'speedup';
+    payload: { speed: number };
+}
+
+type Action = InputAction | UpdateAction | SpeedupAction;
+
+interface State {
+    data: any;
+    input: string;
+    speed: number;
+}
+
+const reducer = (state: State, action: Action) => {
+    switch (action.type) {
+        case 'input':
+            const { input } = action.payload;
+            return { ...state, input };
+        case 'update':
+            const data = JSON.parse(state.input);
+            return {
+                ...state,
+                data,
+                input: JSON.stringify(data, null, 4),
+            };
+        case 'speedup':
+            return {
+                ...state,
+                speed: action.payload.speed,
+            }
+        default:
+            return state;
+    }
+};
+
+const init = (config: Config) => {
+    const data = config.data();
+    const input = JSON.stringify(data, null, 4);
+    const speed = 1;
+    return { data, input, speed };
+};
+
 const VisualizationPage = ({
     WorkerFactory,
     DrawerFactory,
@@ -26,25 +77,29 @@ const VisualizationPage = ({
     width = 1920,
     height = 1080,
 }: Props) => {
-    const [data, setData] = useState(() => config.data());
+    const [state, dispatch] = useReducer(reducer, config, init);
     const canvasRef = useRef(null);
+    const visualizerRef = useRef(null);
 
     useEffect(() => {
         let worker = new BufferedWorker(20, new WorkerFactory());
         const canvas = canvasRef.current;
-        let visualizer = new Visualizer(canvas, worker, DrawerFactory);
-        worker.init(data).then(() => {
-            if (visualizer) {
-                visualizer.start();
+        visualizerRef.current = new Visualizer(canvas, worker, DrawerFactory);
+        worker.init(state.data).then(() => {
+            if (visualizerRef.current) {
+                visualizerRef.current.start();
             }
         });
 
         return () => {
-            visualizer.terminate();
-            visualizer = null;
+            visualizerRef.current.terminate();
+            visualizerRef.current = null;
             worker = null;
         }
-    }, [data]);
+    }, [state.data]);
+
+    useEffect(() => {
+    }, [state.speed]);
 
     return (
         <>
