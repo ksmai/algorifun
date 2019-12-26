@@ -12,5 +12,13 @@ export interface SpeedupAction {
     payload: { speed: number };
 }
 
-type Action = InputAction | UpdateAction | SpeedupAction;
+export interface PauseAction {
+    type: 'pause';
+}
+
+export interface PlayAction {
+    type: 'play';
+}
+
+type Action = InputAction | UpdateAction | SpeedupAction | PauseAction | PlayAction;
 export default Action;

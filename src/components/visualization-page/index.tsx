@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import Action from 'components/visualization-page/actions'
 import SpeedModifier from 'components/visualization-page/speed-modifier';
 import DataEditor from 'components/visualization-page/data-editor';
+import PlaybackControl from 'components/visualization-page/playback-control';
 import Config from 'configs';
 import Worker from 'workers';
 import Visualizer from 'visualizers';
@@ -26,6 +27,7 @@ interface State {
     data: any;
     input: string;
     speed: number;
+    paused: boolean;
 }
 
 const reducer = (state: State, action: Action) => {
@@ -45,6 +47,10 @@ const reducer = (state: State, action: Action) => {
                 ...state,
                 speed: action.payload.speed,
             }
+        case 'pause':
+            return { ...state, paused: true };
+        case 'play':
+            return { ...state, paused: false };
         default:
             return state;
     }
@@ -54,7 +60,8 @@ const init = (config: Config) => {
     const data = config.data();
     const input = JSON.stringify(data, null, 4);
     const speed = 1;
-    return { data, input, speed };
+    const paused = false;
+    return { data, input, speed, paused };
 };
 
 const speeds = [
@@ -84,6 +91,7 @@ const VisualizationPage = ({
             if (visualizerRef.current) {
                 visualizerRef.current.changeSpeed(state.speed);
                 visualizerRef.current.start();
+                dispatch({ type: 'play' });
             }
         });
 
@@ -100,6 +108,16 @@ const VisualizationPage = ({
         }
     }, [state.speed]);
 
+    useEffect(() => {
+        if (visualizerRef.current) {
+            if (state.paused) {
+                visualizerRef.current.pause();
+            } else {
+                visualizerRef.current.play();
+            }
+        }
+    }, [state.paused]);
+
     return (
         <>
             <DrawingArea
@@ -115,6 +133,10 @@ const VisualizationPage = ({
             />
             <DataEditor
                 input={state.input}
+                dispatch={dispatch}
+            />
+            <PlaybackControl
+                paused={state.paused}
                 dispatch={dispatch}
             />
         </>
