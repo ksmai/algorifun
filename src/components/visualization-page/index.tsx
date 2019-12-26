@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import Action from 'components/visualization-page/actions'
 import SpeedModifier from 'components/visualization-page/speed-modifier';
+import DataEditor from 'components/visualization-page/data-editor';
 import Config from 'configs';
 import Worker from 'workers';
 import Visualizer from 'visualizers';
@@ -110,6 +111,10 @@ const VisualizationPage = ({
             <SpeedModifier
                 speed={state.speed}
                 speeds={speeds}
+                dispatch={dispatch}
+            />
+            <DataEditor
+                input={state.input}
                 dispatch={dispatch}
             />
         </>
