@@ -50,7 +50,6 @@ const Container = styled.div`
     z-index: 100;
     background-color: ${hexRGBA(colors.bgColor2dp, .7)};
     padding: 20px 50px;
-    overflow: hidden;
     ${height};
     ${transform};
     ${transition};
