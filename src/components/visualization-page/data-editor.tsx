@@ -1,33 +1,23 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 
-import { InputAction, UpdateAction } from './actions';
+import { input, update } from 'components/visualization-page/actions';
+import VisualizationContext from 'components/visualization-page/context';
 
-interface Props {
-    input: string;
-    dispatch: (action: InputAction | UpdateAction ) => void;
-}
+const DataEditor = () => {
+    const [{ value }, dispatch] = useContext(VisualizationContext);
 
-const DataEditor = ({ input, dispatch }: Props) => {
-    const onChange = useCallback((e) => {
-        dispatch({
-            type: 'input',
-            payload: {
-                input: e.target.value,
-            },
-        });
-    }, [dispatch]);
+    const onChange = useCallback(
+        (e) => dispatch(input(e.target.value)),
+        [dispatch],
+    );
 
-    const onConfirm = useCallback((e) => {
-        dispatch({
-            type: 'update',
-        })
-    }, [dispatch]);
+    const onConfirm = useCallback((e) => dispatch(update()), [dispatch]);
 
     return (
         <>
             <textarea
                 onChange={onChange}
-                value={input}
+                value={value}
             />
             <button
                 type="button"

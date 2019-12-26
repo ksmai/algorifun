@@ -1,15 +1,13 @@
-import React, { useCallback } from 'react';
-import { PlayAction, PauseAction, UpdateAction } from 'components/visualization-page/actions';
+import React, { useCallback, useContext } from 'react';
 
-interface Props {
-    paused: boolean;
-    dispatch: (action: PlayAction | PauseAction | UpdateAction ) => void;
-}
+import { play, pause, update } from 'components/visualization-page/actions';
+import VisualizationContext from 'components/visualization-page/context';
 
-const PlaybackControl = ({ paused, dispatch }: Props) => {
-    const onPlay = useCallback(() => dispatch({ type: 'play' }), [dispatch]);
-    const onPause = useCallback(() => dispatch({ type: 'pause' }), [dispatch]);
-    const onRestart = useCallback(() => dispatch({ type: 'update' }), [dispatch]);
+const PlaybackControl = () => {
+    const [{ paused }, dispatch] = useContext(VisualizationContext);
+    const onPlay = useCallback(() => dispatch(play()), [dispatch]);
+    const onPause = useCallback(() => dispatch(pause()), [dispatch]);
+    const onRestart = useCallback(() => dispatch(update()), [dispatch]);
 
     return (
         <>

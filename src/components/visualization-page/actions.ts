@@ -1,24 +1,39 @@
 export interface InputAction {
-    type: 'input';
-    payload: { input: string };
+    type: 'INPUT';
+    payload: { value: string };
 }
 
 export interface UpdateAction {
-    type: 'update';
+    type: 'UPDATE';
 }
 
 export interface SpeedupAction {
-    type: 'speedup';
+    type: 'SPEEDUP';
     payload: { speed: number };
 }
 
 export interface PauseAction {
-    type: 'pause';
+    type: 'PAUSE';
 }
 
 export interface PlayAction {
-    type: 'play';
+    type: 'PLAY';
 }
 
-type Action = InputAction | UpdateAction | SpeedupAction | PauseAction | PlayAction;
-export default Action;
+export type Action = InputAction | UpdateAction | SpeedupAction | PauseAction | PlayAction;
+
+export const input = (value: string): InputAction => ({
+    type: 'INPUT',
+    payload: { value },
+});
+
+export const update = (): UpdateAction => ({ type: 'UPDATE' });
+
+export const speedup = (speed: number): SpeedupAction => ({
+    type: 'SPEEDUP',
+    payload: { speed },
+});
+
+export const pause = (): PauseAction => ({ type: 'PAUSE' });
+
+export const play = (): PlayAction => ({ type: 'PLAY' });

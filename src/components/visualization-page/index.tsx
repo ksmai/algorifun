@@ -1,7 +1,10 @@
-import React, { useReducer, useEffect, useRef } from 'react';
+import React, { useReducer, useEffect, useRef, useMemo } from 'react';
 import styled from '@emotion/styled';
 
-import Action from 'components/visualization-page/actions'
+import { Action, play } from 'components/visualization-page/actions'
+import reducer from 'components/visualization-page/reducer';
+import State from 'components/visualization-page/state';
+import VisualizationContext from 'components/visualization-page/context';
 import SpeedModifier from 'components/visualization-page/speed-modifier';
 import DataEditor from 'components/visualization-page/data-editor';
 import PlaybackControl from 'components/visualization-page/playback-control';
@@ -13,71 +16,32 @@ import BufferedWorker from 'workers/buffered-worker';
 
 const DrawingArea = styled.canvas`
     width: 100%;
+    height: 100%;
+`;
+
+const Container = styled.div`
+    height: 100vh;
+    position: relative;
 `;
 
 interface Props {
     WorkerFactory: new () => Worker;
     DrawerFactory: DrawerConstructor;
     config: Config;
-    width?: number;
-    height?: number;
 }
 
-interface State {
-    data: any;
-    input: string;
-    speed: number;
-    paused: boolean;
-}
-
-const reducer = (state: State, action: Action) => {
-    switch (action.type) {
-        case 'input':
-            const { input } = action.payload;
-            return { ...state, input };
-        case 'update':
-            const data = JSON.parse(state.input);
-            return {
-                ...state,
-                data,
-                input: JSON.stringify(data, null, 4),
-            };
-        case 'speedup':
-            return {
-                ...state,
-                speed: action.payload.speed,
-            }
-        case 'pause':
-            return { ...state, paused: true };
-        case 'play':
-            return { ...state, paused: false };
-        default:
-            return state;
-    }
-};
-
-const init = (config: Config) => {
+const init = (config: Config): State => {
     const data = config.data();
-    const input = JSON.stringify(data, null, 4);
+    const value = JSON.stringify(data, null, 4);
     const speed = 1;
     const paused = false;
-    return { data, input, speed, paused };
+    return { data, value, speed, paused };
 };
-
-const speeds = [
-    { speed: 0.25, name: '0.25x' },
-    { speed: 0.5, name: '0.5x' },
-    { speed: 1, name: '1x' },
-    { speed: 2, name: '2x' },
-    { speed: 4, name: '4x' },
-];
 
 const VisualizationPage = ({
     WorkerFactory,
     DrawerFactory,
     config,
-    width = 1920,
-    height = 1080,
 }: Props) => {
     const [state, dispatch] = useReducer(reducer, config, init);
     const canvasRef = useRef(null);
@@ -91,7 +55,7 @@ const VisualizationPage = ({
             if (visualizerRef.current) {
                 visualizerRef.current.changeSpeed(state.speed);
                 visualizerRef.current.start();
-                dispatch({ type: 'play' });
+                dispatch(play());
             }
         });
 
@@ -118,28 +82,26 @@ const VisualizationPage = ({
         }
     }, [state.paused]);
 
+    const contextValue: [State, React.Dispatch<Action>] = useMemo(
+        () => [state, dispatch],
+        [state, dispatch],
+    );
+
     return (
-        <>
-            <DrawingArea
-                ref={canvasRef}
-                width={width}
-                height={height}
-                data-paper-resize
-            />
-            <SpeedModifier
-                speed={state.speed}
-                speeds={speeds}
-                dispatch={dispatch}
-            />
-            <DataEditor
-                input={state.input}
-                dispatch={dispatch}
-            />
-            <PlaybackControl
-                paused={state.paused}
-                dispatch={dispatch}
-            />
-        </>
+        <VisualizationContext.Provider value={contextValue}>
+            <Container>
+                <DrawingArea
+                    ref={canvasRef}
+                    data-paper-resize
+                />
+                <div >
+                <SpeedModifier />
+                <DataEditor />
+                <PlaybackControl />
+
+                </div>
+            </Container>
+        </VisualizationContext.Provider>
     );
 };
 
