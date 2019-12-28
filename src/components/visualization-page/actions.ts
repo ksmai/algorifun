@@ -1,10 +1,6 @@
-export interface InputAction {
-    type: 'INPUT';
-    payload: { value: string };
-}
-
 export interface UpdateAction {
     type: 'UPDATE';
+    payload: { data: any };
 }
 
 export interface SpeedupAction {
@@ -20,14 +16,12 @@ export interface PlayAction {
     type: 'PLAY';
 }
 
-export type Action = InputAction | UpdateAction | SpeedupAction | PauseAction | PlayAction;
+export type Action = UpdateAction | SpeedupAction | PauseAction | PlayAction;
 
-export const input = (value: string): InputAction => ({
-    type: 'INPUT',
-    payload: { value },
+export const update = (data: any): UpdateAction => ({
+    type: 'UPDATE',
+    payload: { data },
 });
-
-export const update = (): UpdateAction => ({ type: 'UPDATE' });
 
 export const speedup = (speed: number): SpeedupAction => ({
     type: 'SPEEDUP',

@@ -31,10 +31,10 @@ interface Props {
 
 const init = (config: Config): State => {
     const data = config.data();
-    const value = JSON.stringify(data, null, 4);
+    const { validator } = config;
     const speed = 1;
     const paused = false;
-    return { data, value, speed, paused };
+    return { data, validator, speed, paused };
 };
 
 const VisualizationPage = ({

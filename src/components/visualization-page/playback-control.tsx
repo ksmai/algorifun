@@ -11,10 +11,13 @@ const IconButton = styled(Button)`
 `;
 
 const PlaybackControl = () => {
-    const [{ paused }, dispatch] = useContext(VisualizationContext);
+    const [{ paused, data }, dispatch] = useContext(VisualizationContext);
     const onPlay = useCallback(() => dispatch(play()), [dispatch]);
     const onPause = useCallback(() => dispatch(pause()), [dispatch]);
-    const onRestart = useCallback(() => dispatch(update()), [dispatch]);
+    const onRestart = useCallback(
+        () => dispatch(update(JSON.parse(JSON.stringify(data)))),
+        [dispatch, data],
+    );
 
     return (
         <>

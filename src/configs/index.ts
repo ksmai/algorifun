@@ -1,5 +1,5 @@
 export default interface Config {
     params: any[];
     data: () => any;
-    validator: (data: any) => boolean;
+    validator: (data: any) => string;
 }

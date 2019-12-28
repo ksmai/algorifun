@@ -49,7 +49,10 @@ const Container = styled.div`
     right: 0;
     z-index: 100;
     background-color: ${hexRGBA(colors.bgColor2dp, .7)};
-    padding: 20px 50px;
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     ${height};
     ${transform};
     ${transition};
@@ -111,6 +114,19 @@ const CloseButton = styled.button`
         content: "🞩";
         display: block;
     }
+`;
+
+const Controls = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    margin-bottom: 24px;
+`;
+
+const inputAreaCSS = css`
+    flex: 1 1 auto;
+    width: 400px;
 `;
 
 interface Props {
@@ -176,9 +192,11 @@ const ControlPanel = ({ maxVH = 90, minHeight = 20 }: Props) => {
                 onPointerUp={onPointerUpCancel}
                 onPointerCancel={onPointerUpCancel}
             />
-            <DataEditor />
-            <PlaybackControl />
-            <SpeedModifier />
+            <Controls>
+                <PlaybackControl />
+                <SpeedModifier />
+            </Controls>
+            <DataEditor css={inputAreaCSS} />
         </Container>
     )
 };

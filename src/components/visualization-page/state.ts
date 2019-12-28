@@ -1,6 +1,6 @@
 export default interface State {
     data: any;
-    value: string;
+    validator: (data: any) => string;
     speed: number;
     paused: boolean;
 };
