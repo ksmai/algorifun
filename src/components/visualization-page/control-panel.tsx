@@ -9,6 +9,7 @@ import emptySelection from 'utils/empty-selection';
 import DataEditor from 'components/visualization-page/data-editor';
 import PlaybackControl from 'components/visualization-page/playback-control';
 import SpeedModifier from 'components/visualization-page/speed-modifier';
+import { mobile, notMobile } from 'utils/breakpoints';
 
 interface ContainerProps {
     height: number;
@@ -49,13 +50,17 @@ const Container = styled.div`
     right: 0;
     z-index: 100;
     background-color: ${hexRGBA(colors.bgColor2dp, .7)};
-    padding: 40px 50px;
     display: flex;
+    padding: 20px 10px;
     flex-direction: column;
     align-items: center;
     ${height};
     ${transform};
     ${transition};
+
+    ${notMobile`
+        padding: 40px 50px;
+    `}
 `;
 
 const ResizeHandle = styled.div`
@@ -127,6 +132,7 @@ const Controls = styled.div`
 const inputAreaCSS = css`
     flex: 1 1 auto;
     width: 400px;
+    max-width: 100%;
 `;
 
 interface Props {
