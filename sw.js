@@ -27,20 +27,20 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-74b8802af4c2cc5903bd.js"
+    "url": "webpack-runtime-6b2107af96a0d0280705.js"
   },
   {
-    "url": "commons-9dc465381f456a708eb3.js"
+    "url": "commons-92a2a254b6d9696b3b4c.js"
   },
   {
-    "url": "app-4159fd1a174bc986452e.js"
+    "url": "app-079b40770bbbe5724a43.js"
   },
   {
-    "url": "component---node-modules-gatsby-plugin-offline-app-shell-js-cf3af93bd62761faef6d.js"
+    "url": "component---node-modules-gatsby-plugin-offline-app-shell-js-922102709e3532c9f4c2.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "f89ae05c1a6216aab8c8ddf923a59745"
+    "revision": "9c2466b3dfe2d0ef612dd05a6c7550de"
   },
   {
     "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
@@ -76,7 +76,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/algorifun/app-4159fd1a174bc986452e.js`))) {
+  if (!resources || !(await caches.match(`/algorifun/app-079b40770bbbe5724a43.js`))) {
     return await fetch(event.request)
   }
 
