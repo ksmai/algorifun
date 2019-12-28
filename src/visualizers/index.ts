@@ -10,6 +10,8 @@ export default class Visualizer {
     private done: boolean = false;
     private project: paper.Project;
     private drawer: Drawer;
+    private speed = 1;
+    private paused = false;
 
     constructor(
         private canvas: HTMLCanvasElement,
@@ -24,7 +26,8 @@ export default class Visualizer {
 
     private onFrame(event: any) {
         if (this.animation) {
-            this.animation.run(event.delta)
+            const speed = this.paused ? 0 : this.speed;
+            this.animation.run(event.delta * speed)
             if (this.animation.isFinished()) {
                 this.finishAnimation();
                 this.finishAnimation = null;
@@ -43,6 +46,20 @@ export default class Visualizer {
             await this.animate(this.drawer.handleStep(step));
             step = await this.worker.run();
         }
+    }
+
+    changeSpeed(speed: number): void {
+        if (speed >= 0) {
+            this.speed = speed;
+        }
+    }
+
+    pause(): void {
+        this.paused = true;
+    }
+
+    play(): void {
+        this.paused = false;
     }
 
     private animate(animation: Animation): Promise<void> {

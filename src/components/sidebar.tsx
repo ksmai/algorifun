@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, useStaticQuery, graphql } from 'gatsby';
 import styled from '@emotion/styled';
 
-import Logo from './logo';
-import SiteNavigation from './site-navigation';
+import Logo from 'components/logo';
+import SiteNavigation from 'components/site-navigation';
 
 const Container = styled.aside`
     display: flex;

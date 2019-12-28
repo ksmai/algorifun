@@ -50,7 +50,7 @@ const ${className}Page = () => {
         <VisualizationPage
             WorkerFactory={${className}Worker}
             DrawerFactory={${className}Drawer}
-            inputs={config.data}
+            config={config}
         />
     );
 };
